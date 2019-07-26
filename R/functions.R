@@ -40,9 +40,16 @@ AutoPackagR <- function(fname){
   nonBaseFunctions <- setdiff(hasFunction_pre4,stockPackages)
 
   installedPackages <- installed.packages()[,1]
-  installedPackages_Functions <- unlist(sapply(installedPackages,function(x) allPackagesAndFunctions$function_names[which(allPackagesAndFunctions$package_names==x)]))
+  installedPackages_FunctionsList <- lapply(installedPackages,function(x) allPackagesAndFunctions$function_names[which(allPackagesAndFunctions$package_names==x)])
+  installedPackages_Functions <- unlist(installedPackages_FunctionsList)
+
 
   notAvailableFunctions <- sapply(nonBaseFunctions,function(x) length(which(installedPackages_Functions==x)))
+  availableFunctions <- names(which(notAvailableFunctions==1))
+  packagesToLoad <- sapply(availableFunctions,function(x) installedPackages[grep(x,installedPackages_FunctionsList)])
+  ## Add catcher if function maps to more than 1 package, ask user which
+  l <- lapply(unlist(packagesToLoad),library,character.only = TRUE)
+
   notAvailableFunctions <- names(which(notAvailableFunctions==0))
 
   packagesToInstall <- lapply(notAvailableFunctions,function(x) allPackagesAndFunctions[which(allPackagesAndFunctions$function_names==x),])
