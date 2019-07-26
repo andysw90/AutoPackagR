@@ -90,12 +90,14 @@ AutoPackagR <- function(fname){
       }
     }
   }
-  packageOutput <- removeBlanks(packageOutput)
+  #add catcher if a blank one
+  # packageOutput <- removeBlanks(packageOutput)
 
 
   a <- sapply(packageOutput,function(x) install.packages(x))
-  installedPackages <- removeBlanks(names(a))
+  a <- sapply(packageOutput,function(x) library(x,character.only = TRUE))
+  # installedPackages <- removeBlanks(names(a))
 
-  installedPackages
+  packageOutput
 
 }
