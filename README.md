@@ -5,4 +5,4 @@ Exploring a (probably terrible) idea to scans an R source file for functions, an
 Collidr library (will be added as dependancy to package)
 
 ### Author:
-Andy Walker (andysw90@gmail.com)
+Andy Walker
